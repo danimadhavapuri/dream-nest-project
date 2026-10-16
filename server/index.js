@@ -69,13 +69,24 @@ app.use((err, req, res, next) => {
 const PORT = process.env.PORT || 3001;
 const MONGO_URL = process.env.MONGO_URL || "mongodb://127.0.0.1:27017/dreams_nest";
 
-mongoose
-  .connect(MONGO_URL, {
-    dbName: "Dream_Nest",
-  })
-  .then(() => {
-    app.listen(PORT, () => console.log(`🚀 Dream Nest Server running on Port: ${PORT}`));
-  })
-  .catch((err) => {
+// Bind port immediately so Render port detection succeeds instantly
+app.listen(PORT, () => {
+  console.log(`🚀 Dream Nest Server running on Port: ${PORT}`);
+});
+
+// Connect to MongoDB with automatic retry
+const connectWithRetry = async () => {
+  try {
+    await mongoose.connect(MONGO_URL, {
+      dbName: "Dream_Nest",
+      serverSelectionTimeoutMS: 15000,
+    });
+    console.log("Connected to MongoDB successfully!");
+  } catch (err) {
     console.error(`❌ MongoDB connection error: ${err.message}`);
-  });
+    console.log("Retrying MongoDB connection in 5 seconds...");
+    setTimeout(connectWithRetry, 5000);
+  }
+};
+
+connectWithRetry();
