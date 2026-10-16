@@ -1,13 +1,29 @@
 # 🏡 Dream Nest — Full-Stack Vacation Rental Platform
 
+[![Live Website](https://img.shields.io/badge/Live%20Website-Vercel-black?style=for-the-badge&logo=vercel)](https://dream-nest-project.vercel.app/)
+[![Live API](https://img.shields.io/badge/Live%20API-Render-46E3B7?style=for-the-badge&logo=render&logoColor=white)](https://dream-nest-project.onrender.com/)
 [![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=black)](https://reactjs.org/)
 [![Redux](https://img.shields.io/badge/Redux%20Toolkit-764ABC?logo=redux&logoColor=white)](https://redux-toolkit.js.org/)
 [![Node.js](https://img.shields.io/badge/Node.js-18+-339933?logo=nodedotjs&logoColor=white)](https://nodejs.org/)
 [![Express.js](https://img.shields.io/badge/Express.js-4.x-000000?logo=express&logoColor=white)](https://expressjs.com/)
-[![MongoDB](https://img.shields.io/badge/MongoDB-Mongoose%208-47A248?logo=mongodb&logoColor=white)](https://www.mongodb.com/)
+[![MongoDB](https://img.shields.io/badge/MongoDB-Atlas%20Cloud-47A248?logo=mongodb&logoColor=white)](https://www.mongodb.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 **Dream Nest** is a full-stack, enterprise-grade vacation rental and home booking platform inspired by Airbnb. Built with modern MERN architecture, it delivers real-time property discovery, multi-step listing creation, interactive booking calendars, optimistic wishlist favoriting, and secure JWT authentication.
+
+---
+
+## 🌐 Live Application Links
+
+- 🔗 **Production Web App:** [https://dream-nest-project.vercel.app](https://dream-nest-project.vercel.app)
+- 🔗 **Production Backend API:** [https://dream-nest-project.onrender.com](https://dream-nest-project.onrender.com)
+- 🐙 **GitHub Repository:** [https://github.com/danimadhavapuri/dream-nest-project](https://github.com/danimadhavapuri/dream-nest-project)
+
+### 🔑 Demo Accounts (Pre-configured)
+| Role | Email | Password |
+| :--- | :--- | :--- |
+| **Demo User** | `dani@dreamnest.com` | `password123` |
+| **Host User** | `sarah@dreamnest.com` | `password123` |
 
 ---
 
@@ -15,7 +31,7 @@
 
 - 🌟 **Dynamic Category Discovery**: 15 distinct vacation categories (Beachfront, Windmills, Iconic cities, Countryside, Amazing Pools, Islands, Lakefront, Ski-in/out, Castles, Caves, Camping, Arctic, Desert, Barns, Luxury).
   - **Deduplicated Feed**: Homepage displays one curated representative property per category for a clean, non-repetitive feed.
-  - **Category Drill-Down**: Selecting any category instantly renders all properties matching that category.
+  - **Category Drill-Down**: Selecting any category instantly renders all properties matching that category (60 properties seeded).
 - ❤️ **Optimistic Wishlist System**: Instant heart toggle feedback with zero-latency state transitions, synced with Redux-Persist and backed by MongoDB persistence.
 - 📅 **Interactive Booking Engine**: Date range selection powered by `react-date-range` with dynamic nightly price computation and duplicate reservation prevention.
 - 🏡 **Host Management & Property Creation**: Multi-step property wizard with photo uploads, category tagging, accommodation specs, and amenity checklists.
@@ -34,14 +50,16 @@
 - **Styling**: Sass / SCSS (BEM naming conventions, responsive mixins)
 - **UI Components**: Material-UI (MUI Icons) & React Icons
 - **Calendar**: `react-date-range` & `date-fns`
+- **Hosting**: Vercel
 
 ### Backend
 - **Runtime**: Node.js
 - **Framework**: Express.js
-- **Database**: MongoDB with Mongoose 8
+- **Database**: MongoDB Atlas with Mongoose 8
 - **Authentication**: JSON Web Tokens (JWT) & `bcryptjs`
 - **File Handling**: Multer (disk storage with unique hash suffixes)
 - **Cross-Origin**: CORS middleware with credential support
+- **Hosting**: Render
 
 ---
 
@@ -58,6 +76,7 @@ Dreams-Nest/
 │   │   ├── services/           # Centralized API service & image normalization helpers
 │   │   ├── styles/             # Modular SCSS stylesheets, variables, and breakpoints
 │   │   └── data.js             # Category definitions and amenities metadata
+│   ├── vercel.json             # SPA rewrites configuration for deep routing
 │   ├── .env.example            # Client environment template
 │   └── package.json
 │
@@ -77,10 +96,10 @@ Dreams-Nest/
 
 ---
 
-## 🚀 Getting Started
+## 🚀 Local Development Setup
 
 ### Prerequisites
-- [Node.js](https://nodejs.org/) (v16+ recommended)
+- [Node.js](https://nodejs.org/) (v18+ recommended)
 - [MongoDB](https://www.mongodb.com/) (Local Community Server or MongoDB Atlas cloud URI)
 - Git
 
@@ -88,8 +107,8 @@ Dreams-Nest/
 
 ### 1. Clone the Repository
 ```bash
-git clone <your-repository-url>
-cd "Dreams Nest"
+git clone https://github.com/danimadhavapuri/dream-nest-project.git
+cd "dream-nest-project"
 ```
 
 ---
@@ -100,7 +119,7 @@ cd "Dreams Nest"
 Create a `.env` file in the `server` directory based on `server/.env.example`:
 ```env
 PORT=3001
-MONGO_URL=mongodb://127.0.0.1:27017/dreams_nest
+MONGO_URL=your_mongodb_connection_string
 JWT_SECRET=your_super_secret_jwt_key_here
 CLIENT_URL=http://localhost:3000
 ```
@@ -137,13 +156,9 @@ cd ../server
 node seed.js
 ```
 
-**Pre-configured Demo Accounts:**
-- **Demo User:** `dani@dreamnest.com` | **Password:** `password123`
-- **Host User:** `sarah@dreamnest.com` | **Password:** `password123`
-
 ---
 
-### 5. Run the Application
+### 5. Run the Application Locally
 
 Open two terminal windows:
 
@@ -193,29 +208,6 @@ npm start
 | `PATCH` | `/users/:userId/:listingId` | Toggle a property in user's wishlist |
 | `GET` | `/users/:userId/properties` | Retrieve properties listed by user |
 | `GET` | `/users/:userId/reservations` | Retrieve reservations made on host's properties |
-
----
-
-## 🌐 Deployment Guide
-
-### Deploy Backend (e.g., Render / Railway)
-1. Push your repository to GitHub.
-2. Create a new **Web Service** on [Render](https://render.com/) or [Railway](https://railway.app/).
-3. Set Root Directory to `server`.
-4. Set Build Command: `npm install`.
-5. Set Start Command: `npm start`.
-6. Add Environment Variables:
-   - `MONGO_URL`: Your MongoDB Atlas connection string.
-   - `JWT_SECRET`: A secure random secret.
-   - `CLIENT_URL`: Your deployed frontend URL.
-
-### Deploy Frontend (e.g., Vercel / Netlify)
-1. Create a new Project on [Vercel](https://vercel.com/) or [Netlify](https://www.netlify.com/).
-2. Set Root Directory to `client`.
-3. Set Build Command: `npm run build`.
-4. Set Output Directory: `build`.
-5. Add Environment Variable:
-   - `REACT_APP_API_URL`: Your deployed backend service URL (e.g., `https://your-api.onrender.com`).
 
 ---
 
